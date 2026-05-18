@@ -1,0 +1,17 @@
+/home/alex/MarketplaceApi/MarketplaceApi.Application/bin/Debug/net8.0/MarketplaceApi.Application.deps.json
+/home/alex/MarketplaceApi/MarketplaceApi.Application/bin/Debug/net8.0/MarketplaceApi.Application.dll
+/home/alex/MarketplaceApi/MarketplaceApi.Application/bin/Debug/net8.0/MarketplaceApi.Application.pdb
+/home/alex/MarketplaceApi/MarketplaceApi.Application/bin/Debug/net8.0/MarketplaceApi.Domain.dll
+/home/alex/MarketplaceApi/MarketplaceApi.Application/bin/Debug/net8.0/MarketplaceApi.Domain.pdb
+/home/alex/MarketplaceApi/MarketplaceApi.Application/obj/Debug/net8.0/MarketplaceApi.Application.csproj.AssemblyReference.cache
+/home/alex/MarketplaceApi/MarketplaceApi.Application/obj/Debug/net8.0/MarketplaceApi.Application.GeneratedMSBuildEditorConfig.editorconfig
+/home/alex/MarketplaceApi/MarketplaceApi.Application/obj/Debug/net8.0/MarketplaceApi.Application.AssemblyInfoInputs.cache
+/home/alex/MarketplaceApi/MarketplaceApi.Application/obj/Debug/net8.0/MarketplaceApi.Application.AssemblyInfo.cs
+/home/alex/MarketplaceApi/MarketplaceApi.Application/obj/Debug/net8.0/MarketplaceApi.Application.csproj.CoreCompileInputs.cache
+/home/alex/MarketplaceApi/MarketplaceApi.Application/obj/Debug/net8.0/MarketplaceApi.Application.csproj.CopyComplete
+/home/alex/MarketplaceApi/MarketplaceApi.Application/obj/Debug/net8.0/MarketplaceApi.Application.dll
+/home/alex/MarketplaceApi/MarketplaceApi.Application/obj/Debug/net8.0/refint/MarketplaceApi.Application.dll
+/home/alex/MarketplaceApi/MarketplaceApi.Application/obj/Debug/net8.0/MarketplaceApi.Application.pdb
+/home/alex/MarketplaceApi/MarketplaceApi.Application/obj/Debug/net8.0/ref/MarketplaceApi.Application.dll
+/home/alex/MarketplaceApi/MarketplaceApi.Application/bin/Debug/net8.0/MarketplaceApi.Shared.dll
+/home/alex/MarketplaceApi/MarketplaceApi.Application/bin/Debug/net8.0/MarketplaceApi.Shared.pdb

@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "/home/alex/MarketplaceApi/MarketplaceApi.API/wwwroot/perfiles/01549412-226c-45a8-b80b-b0cda4866b64.jpeg",
+      "PackagePath": "staticwebassets/perfiles/01549412-226c-45a8-b80b-b0cda4866b64.jpeg"
+    },
+    {
+      "Id": "/home/alex/MarketplaceApi/MarketplaceApi.API/wwwroot/perfiles/8ca93bc4-25ed-4522-9a00-8dc25a97774d.png",
+      "PackagePath": "staticwebassets/perfiles/8ca93bc4-25ed-4522-9a00-8dc25a97774d.png"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.MarketplaceApi.API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.MarketplaceApi.API.props",
+      "PackagePath": "build\\MarketplaceApi.API.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.MarketplaceApi.API.props",
+      "PackagePath": "buildMultiTargeting\\MarketplaceApi.API.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.MarketplaceApi.API.props",
+      "PackagePath": "buildTransitive\\MarketplaceApi.API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

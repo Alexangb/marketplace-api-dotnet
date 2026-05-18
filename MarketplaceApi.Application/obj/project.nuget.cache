@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "dgSpecHash": "021cXcf8A9Kwk5wQyDgMupNqi1MmLUDGXKpnQYqef2yRL2LbHOYibUXZPIBvjfczAb5Hdgb2bGAa5LWUQHFcPg==",
+  "success": true,
+  "projectFilePath": "/home/alex/MarketplaceApi/MarketplaceApi.Application/MarketplaceApi.Application.csproj",
+  "expectedPackageFiles": [
+    "/home/alex/.nuget/packages/bcrypt.net-next/4.2.0/bcrypt.net-next.4.2.0.nupkg.sha512",
+    "/home/alex/.nuget/packages/microsoft.aspnetcore.http.abstractions/2.3.10/microsoft.aspnetcore.http.abstractions.2.3.10.nupkg.sha512",
+    "/home/alex/.nuget/packages/microsoft.aspnetcore.http.features/5.0.17/microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
+    "/home/alex/.nuget/packages/microsoft.extensions.configuration.abstractions/10.0.8/microsoft.extensions.configuration.abstractions.10.0.8.nupkg.sha512",
+    "/home/alex/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "/home/alex/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.0/microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "/home/alex/.nuget/packages/microsoft.extensions.primitives/10.0.8/microsoft.extensions.primitives.10.0.8.nupkg.sha512",
+    "/home/alex/.nuget/packages/microsoft.identitymodel.abstractions/8.18.0/microsoft.identitymodel.abstractions.8.18.0.nupkg.sha512",
+    "/home/alex/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.18.0/microsoft.identitymodel.jsonwebtokens.8.18.0.nupkg.sha512",
+    "/home/alex/.nuget/packages/microsoft.identitymodel.logging/8.18.0/microsoft.identitymodel.logging.8.18.0.nupkg.sha512",
+    "/home/alex/.nuget/packages/microsoft.identitymodel.tokens/8.18.0/microsoft.identitymodel.tokens.8.18.0.nupkg.sha512",
+    "/home/alex/.nuget/packages/system.identitymodel.tokens.jwt/8.18.0/system.identitymodel.tokens.jwt.8.18.0.nupkg.sha512",
+    "/home/alex/.nuget/packages/system.io.pipelines/5.0.2/system.io.pipelines.5.0.2.nupkg.sha512",
+    "/home/alex/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

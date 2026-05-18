@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "Hash": "V6EVxZXCX2BJx0OcDr3SehRc1I38uONUWc9enkc+2Sw=",
+  "Source": "MarketplaceApi.API",
+  "BasePath": "_content/MarketplaceApi.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "MarketplaceApi.API/wwwroot",
+      "Source": "MarketplaceApi.API",
+      "ContentRoot": "/home/alex/MarketplaceApi/MarketplaceApi.API/wwwroot/",
+      "BasePath": "_content/MarketplaceApi.API",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/home/alex/MarketplaceApi/MarketplaceApi.API/wwwroot/perfiles/01549412-226c-45a8-b80b-b0cda4866b64.jpeg",
+      "SourceId": "MarketplaceApi.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/alex/MarketplaceApi/MarketplaceApi.API/wwwroot/",
+      "BasePath": "_content/MarketplaceApi.API",
+      "RelativePath": "perfiles/01549412-226c-45a8-b80b-b0cda4866b64.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/perfiles/01549412-226c-45a8-b80b-b0cda4866b64.jpeg"
+    },
+    {
+      "Identity": "/home/alex/MarketplaceApi/MarketplaceApi.API/wwwroot/perfiles/8ca93bc4-25ed-4522-9a00-8dc25a97774d.png",
+      "SourceId": "MarketplaceApi.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/alex/MarketplaceApi/MarketplaceApi.API/wwwroot/",
+      "BasePath": "_content/MarketplaceApi.API",
+      "RelativePath": "perfiles/8ca93bc4-25ed-4522-9a00-8dc25a97774d.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/perfiles/8ca93bc4-25ed-4522-9a00-8dc25a97774d.png"
+    }
+  ]
+}

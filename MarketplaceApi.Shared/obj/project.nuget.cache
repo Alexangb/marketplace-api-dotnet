@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "HkF8EFh7O2gmzGNkhzWHemimvSMkEb9a1YVnq4nIebsyyZpZ3u5EjzA7nm+hDe+DT9uPn0rMjp1MLwqwbKpiew==",
+  "success": true,
+  "projectFilePath": "/home/alex/MarketplaceApi/MarketplaceApi.Shared/MarketplaceApi.Shared.csproj",
+  "expectedPackageFiles": [
+    "/home/alex/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "/home/alex/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.0/microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "/home/alex/.nuget/packages/microsoft.identitymodel.abstractions/8.18.0/microsoft.identitymodel.abstractions.8.18.0.nupkg.sha512",
+    "/home/alex/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.18.0/microsoft.identitymodel.jsonwebtokens.8.18.0.nupkg.sha512",
+    "/home/alex/.nuget/packages/microsoft.identitymodel.logging/8.18.0/microsoft.identitymodel.logging.8.18.0.nupkg.sha512",
+    "/home/alex/.nuget/packages/microsoft.identitymodel.tokens/8.18.0/microsoft.identitymodel.tokens.8.18.0.nupkg.sha512",
+    "/home/alex/.nuget/packages/system.identitymodel.tokens.jwt/8.18.0/system.identitymodel.tokens.jwt.8.18.0.nupkg.sha512"
+  ],
+  "logs": []
+}
