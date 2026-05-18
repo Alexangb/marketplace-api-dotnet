@@ -1,35 +1,52 @@
 # Marketplace API - ASP.NET Core
 
-API REST desarrollada en .NET usando arquitectura por capas.
+API REST desarrollada con ASP.NET Core siguiendo arquitectura por capas y principios de Clean Architecture.
 
 ## Tecnologías
+
 - ASP.NET Core
 - Entity Framework Core
 - PostgreSQL
 - AutoMapper
+- JWT Authentication
+- Swagger
 - Repository Pattern
 - Unit Of Work
-- DTOs
-- Swagger
 
 ## Arquitectura
-- Domain
-- Application
-- Infrastructure
-- API
+
+MarketplaceApi.Domain
+MarketplaceApi.Application
+MarketplaceApi.Infrastructure
+MarketplaceApi.API
 
 ## Funcionalidades
-- Gestión de usuarios
+
+- Usuarios
+- Roles
 - Categorías
-- Productos
+- Servicios
 - Reservas
 - Autenticación JWT
-- Filtros y paginación
+- Paginación
+- Filtros
 
 ## Instalación
 
-```bash
-git clone URL_DEL_REPOSITORIO
-cd proyecto
+git clone TU_URL
+
+cd marketplace-api-dotnet
+
 dotnet restore
+
+dotnet ef database update
+
 dotnet run
+
+## Swagger
+
+https://localhost:xxxx/swagger
+
+## Autor
+
+Alexander
