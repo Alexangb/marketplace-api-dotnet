@@ -16,15 +16,19 @@ namespace MarketplaceApi.Application.Services
         private readonly JwtService _jwtService;
         private readonly ILogger<AuthService> _logger;
         private readonly string _fotosPath;
+        // Agregar el servicio en el constructor
+        private readonly CloudinaryService _cloudinaryService;
+
 
         public AuthService(
             IGenericRepository<Usuario> usuarioRepo,
-            ILogger<AuthService> logger, JwtService jwtService
+            ILogger<AuthService> logger, JwtService jwtService, CloudinaryService cloudinaryService
             )
         {
             _usuarioRepo = usuarioRepo;
             _logger = logger;
             _jwtService = jwtService;
+            _cloudinaryService = cloudinaryService;
             _fotosPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "perfiles");
         }
 
@@ -227,7 +231,7 @@ namespace MarketplaceApi.Application.Services
                 throw;
             }
         }
-
+        // Modificar SubirFotoPerfilAsync
         public async Task<string> SubirFotoPerfilAsync(int usuarioId, IFormFile archivo)
         {
             try
@@ -249,29 +253,18 @@ namespace MarketplaceApi.Application.Services
                 if (archivo.Length > 5 * 1024 * 1024) // 5MB
                     throw new BusinessException("El archivo no puede superar los 5MB");
 
-                // Crear directorio si no existe
-                if (!Directory.Exists(_fotosPath))
-                    Directory.CreateDirectory(_fotosPath);
-
-                // Eliminar foto anterior si existe
+                // Eliminar foto anterior si existe en Cloudinary
                 if (!string.IsNullOrEmpty(usuario.FotoUrl))
                 {
-                    var oldPath = Path.Combine(_fotosPath, usuario.FotoUrl);
-                    if (File.Exists(oldPath))
-                        File.Delete(oldPath);
+                    var publicId = _cloudinaryService.GetPublicIdFromUrl(usuario.FotoUrl);
+                    await _cloudinaryService.DeleteImageAsync(publicId);
                 }
 
-                // Guardar nueva foto
-                var fileName = $"{usuarioId}_{Guid.NewGuid()}{extension}";
-                var filePath = Path.Combine(_fotosPath, fileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await archivo.CopyToAsync(stream);
-                }
+                // Subir nueva foto a Cloudinary
+                var imageUrl = await _cloudinaryService.UploadImageAsync(archivo, "perfiles");
 
                 // Actualizar URL en BD
-                usuario.FotoUrl = $"/perfiles/{fileName}";
+                usuario.FotoUrl = imageUrl;
                 _usuarioRepo.Update(usuario);
                 await _usuarioRepo.SaveAsync();
 
@@ -286,6 +279,7 @@ namespace MarketplaceApi.Application.Services
             }
         }
 
+        // Modificar EliminarFotoPerfilAsync
         public async Task<bool> EliminarFotoPerfilAsync(int usuarioId)
         {
             try
@@ -296,9 +290,9 @@ namespace MarketplaceApi.Application.Services
 
                 if (!string.IsNullOrEmpty(usuario.FotoUrl))
                 {
-                    var filePath = Path.Combine(_fotosPath, Path.GetFileName(usuario.FotoUrl));
-                    if (File.Exists(filePath))
-                        File.Delete(filePath);
+                    // Eliminar de Cloudinary
+                    var publicId = _cloudinaryService.GetPublicIdFromUrl(usuario.FotoUrl);
+                    await _cloudinaryService.DeleteImageAsync(publicId);
                 }
 
                 usuario.FotoUrl = null;
@@ -314,7 +308,6 @@ namespace MarketplaceApi.Application.Services
                 throw;
             }
         }
-
         public async Task<bool> ExistsByEmailAsync(string email)
         {
             return await _usuarioRepo.AnyAsync(u => u.Email == email);
