@@ -83,8 +83,7 @@ var app = builder.Build();
 app.UseCors("AllowNextjs");
 
 // Habilitar Swagger solo en desarrollo (puedes quitar el 'if' si lo quieres siempre)
-if (app.Environment.IsDevelopment())
-{
+
     // Agrega esta línea antes de UseAuthorization
     app.UseStaticFiles();
     app.UseSwagger();
@@ -93,7 +92,7 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Marketplace API v1");
         c.RoutePrefix = string.Empty; // Esto hace que Swagger salga en la raíz (http://localhost:5000/)
     });
-}
+
 
 
 app.UseHttpsRedirection();
