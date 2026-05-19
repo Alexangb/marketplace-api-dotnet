@@ -33,6 +33,7 @@ builder.Services.AddScoped<IServicioService, ServicioService>();
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<IHorarioService, HorarioService>();
 builder.Services.AddScoped<IReservaService, ReservaService>();
+builder.Services.AddScoped<IResenaService, ResenaService>();
 builder.Services.AddScoped<JwtService>();
 // Agrega esta línea antes de var app = builder.Build();
 builder.Services.AddHttpContextAccessor();
