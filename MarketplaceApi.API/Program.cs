@@ -40,10 +40,15 @@ builder.Services.AddHttpContextAccessor();
 // configurar cors para permitir peticiones desde el frontend (Next.js)
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowNextjs",
-        policy => policy.WithOrigins("http://localhost:3000")
-                        .AllowAnyMethod()
-                        .AllowAnyHeader());
+
+    options.AddPolicy("AllowAll", policy =>
+{
+   policy
+       .AllowAnyOrigin()
+       .AllowAnyHeader()
+       .AllowAnyMethod();
+});
+
 });
 // Add services to the container.
 // Configuración de Swagger at https://aka.ms/aspnetcore/swashbuckle
@@ -84,14 +89,14 @@ app.UseCors("AllowNextjs");
 
 // Habilitar Swagger solo en desarrollo (puedes quitar el 'if' si lo quieres siempre)
 
-    // Agrega esta línea antes de UseAuthorization
-    app.UseStaticFiles();
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Marketplace API v1");
-        c.RoutePrefix = string.Empty; // Esto hace que Swagger salga en la raíz (http://localhost:5000/)
-    });
+// Agrega esta línea antes de UseAuthorization
+app.UseStaticFiles();
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Marketplace API v1");
+    c.RoutePrefix = string.Empty; // Esto hace que Swagger salga en la raíz (http://localhost:5000/)
+});
 
 
 
