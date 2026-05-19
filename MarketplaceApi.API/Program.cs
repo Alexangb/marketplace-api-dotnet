@@ -43,10 +43,10 @@ builder.Services.AddCors(options =>
 
     options.AddPolicy("AllowAll", policy =>
 {
-   policy
-       .AllowAnyOrigin()
-       .AllowAnyHeader()
-       .AllowAnyMethod();
+    policy
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
 });
 
 });
@@ -85,7 +85,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
-app.UseCors("AllowNextjs");
+app.UseCors("AllowAll");
 
 // Habilitar Swagger solo en desarrollo (puedes quitar el 'if' si lo quieres siempre)
 
