@@ -15,3 +15,4 @@
 /home/alex/MarketplaceApi/MarketplaceApi.Application/obj/Debug/net8.0/ref/MarketplaceApi.Application.dll
 /home/alex/MarketplaceApi/MarketplaceApi.Application/bin/Debug/net8.0/MarketplaceApi.Shared.dll
 /home/alex/MarketplaceApi/MarketplaceApi.Application/bin/Debug/net8.0/MarketplaceApi.Shared.pdb
+/home/alex/MarketplaceApi/MarketplaceApi.Application/obj/Debug/net8.0/MarketplaceApi.Application.sourcelink.json

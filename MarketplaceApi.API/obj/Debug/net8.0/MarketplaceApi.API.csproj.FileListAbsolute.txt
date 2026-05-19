@@ -123,3 +123,4 @@
 /home/alex/MarketplaceApi/MarketplaceApi.API/bin/Debug/net8.0/BCrypt-Net-Next.dll
 /home/alex/MarketplaceApi/MarketplaceApi.API/bin/Debug/net8.0/MarketplaceApi.Shared.dll
 /home/alex/MarketplaceApi/MarketplaceApi.API/bin/Debug/net8.0/MarketplaceApi.Shared.pdb
+/home/alex/MarketplaceApi/MarketplaceApi.API/obj/Debug/net8.0/MarketplaceApi.API.sourcelink.json

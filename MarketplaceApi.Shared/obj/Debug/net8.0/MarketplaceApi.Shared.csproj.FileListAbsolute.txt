@@ -10,3 +10,4 @@
 /home/alex/MarketplaceApi/MarketplaceApi.Shared/obj/Debug/net8.0/MarketplaceApi.Shared.pdb
 /home/alex/MarketplaceApi/MarketplaceApi.Shared/obj/Debug/net8.0/ref/MarketplaceApi.Shared.dll
 /home/alex/MarketplaceApi/MarketplaceApi.Shared/obj/Debug/net8.0/MarketplaceApi.Shared.csproj.AssemblyReference.cache
+/home/alex/MarketplaceApi/MarketplaceApi.Shared/obj/Debug/net8.0/MarketplaceApi.Shared.sourcelink.json

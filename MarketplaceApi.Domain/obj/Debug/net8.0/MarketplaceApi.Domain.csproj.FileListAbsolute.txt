@@ -9,3 +9,4 @@
 /home/alex/MarketplaceApi/MarketplaceApi.Domain/obj/Debug/net8.0/refint/MarketplaceApi.Domain.dll
 /home/alex/MarketplaceApi/MarketplaceApi.Domain/obj/Debug/net8.0/MarketplaceApi.Domain.pdb
 /home/alex/MarketplaceApi/MarketplaceApi.Domain/obj/Debug/net8.0/ref/MarketplaceApi.Domain.dll
+/home/alex/MarketplaceApi/MarketplaceApi.Domain/obj/Debug/net8.0/MarketplaceApi.Domain.sourcelink.json
