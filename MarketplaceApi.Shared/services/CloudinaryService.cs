@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.Http;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 
 namespace MarketplaceApi.Shared.Services
@@ -11,11 +11,11 @@ namespace MarketplaceApi.Shared.Services
 
         public CloudinaryService(IConfiguration configuration)
         {
-            var account = new Account(
-                configuration["Cloudinary:CloudName"],
-                configuration["Cloudinary:ApiKey"],
-                configuration["Cloudinary:ApiSecret"]
-            );
+            var cloudName = configuration["Cloudinary:CloudName"];
+            var apiKey = configuration["Cloudinary:ApiKey"];
+            var apiSecret = configuration["Cloudinary:ApiSecret"];
+
+            var account = new Account(cloudName, apiKey, apiSecret);
             _cloudinary = new Cloudinary(account);
         }
 
@@ -26,7 +26,7 @@ namespace MarketplaceApi.Shared.Services
             {
                 File = new FileDescription(file.FileName, stream),
                 Folder = folder,
-                Transformation = new Transformation().Width(300).Height(300).Crop("fill")
+                Transformation = new Transformation().Width(500).Height(500).Crop("fill").Quality("auto")
             };
             
             var uploadResult = await _cloudinary.UploadAsync(uploadParams);
@@ -42,10 +42,13 @@ namespace MarketplaceApi.Shared.Services
 
         public string GetPublicIdFromUrl(string url)
         {
+            if (string.IsNullOrEmpty(url)) return Guid.NewGuid().ToString();
+            
+            // Extraer el public_id de la URL de Cloudinary
             var uri = new Uri(url);
-            var segments = uri.Segments;
-            var lastSegment = segments.Last();
-            return Path.GetFileNameWithoutExtension(lastSegment);
+            var segments = uri.AbsolutePath.Split('/');
+            var fileName = segments.Last();
+            return Path.GetFileNameWithoutExtension(fileName);
         }
     }
 }

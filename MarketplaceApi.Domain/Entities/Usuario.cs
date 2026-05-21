@@ -8,7 +8,7 @@ namespace MarketplaceApi.Domain.Entities;
 public partial class Usuario
 {
     public int Id { get; set; }
-    public string? FotoBase64 { get; set; }  // Agregar campo para base64
+    // Agregar campo para base64
     public string Nombre { get; set; } = null!;
 
     public string? Apellido { get; set; }

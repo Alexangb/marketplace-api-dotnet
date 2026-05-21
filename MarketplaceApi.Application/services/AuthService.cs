@@ -88,7 +88,7 @@ namespace MarketplaceApi.Application.Services
                 if (!BCrypt.Net.BCrypt.Verify(dto.Password, usuario.PasswordHash))
                     throw new BusinessException("Credenciales inválidas");
 
-                // ✅ Generar token real
+                //  Generar token real
                 var token = _jwtService.GenerateToken(usuario.Id, usuario.Email, usuario.Rol);
                 var refreshToken = _jwtService.GenerateRefreshToken();
 
