@@ -15,37 +15,31 @@ namespace MarketplaceApi.Application.Services
         private readonly IGenericRepository<Usuario> _usuarioRepo;
         private readonly JwtService _jwtService;
         private readonly ILogger<AuthService> _logger;
-        private readonly string _fotosPath;
-        // Agregar el servicio en el constructor
         private readonly CloudinaryService _cloudinaryService;
-
 
         public AuthService(
             IGenericRepository<Usuario> usuarioRepo,
-            ILogger<AuthService> logger, JwtService jwtService, CloudinaryService cloudinaryService
-            )
+            ILogger<AuthService> logger,
+            JwtService jwtService,
+            CloudinaryService cloudinaryService)
         {
             _usuarioRepo = usuarioRepo;
             _logger = logger;
             _jwtService = jwtService;
             _cloudinaryService = cloudinaryService;
-            _fotosPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "perfiles");
         }
 
         public async Task<bool> RegisterAsync(UserRegisterDto userDto)
         {
             try
             {
-                // Validar que el email no exista
                 var emailExiste = await _usuarioRepo.AnyAsync(u => u.Email == userDto.Email);
                 if (emailExiste)
                     throw new BusinessException("El email ya está registrado");
 
-                // Validar rol válido
                 if (!Roles.IsValidRole(userDto.Rol))
                     throw new BusinessException($"Rol '{userDto.Rol}' no es válido");
 
-                // Hashear contraseña
                 var passwordHash = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
 
                 var usuario = new Usuario
@@ -84,15 +78,12 @@ namespace MarketplaceApi.Application.Services
                 if (usuario.Estado == false)
                     throw new BusinessException("Usuario inactivo. Contacte al administrador");
 
-                // Verificar contraseña
                 if (!BCrypt.Net.BCrypt.Verify(dto.Password, usuario.PasswordHash))
                     throw new BusinessException("Credenciales inválidas");
 
-                //  Generar token real
                 var token = _jwtService.GenerateToken(usuario.Id, usuario.Email, usuario.Rol);
                 var refreshToken = _jwtService.GenerateRefreshToken();
 
-                // Guardar refresh token en BD
                 usuario.RefreshToken = refreshToken;
                 usuario.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
                 usuario.UltimoAcceso = DateTime.UtcNow;
@@ -125,7 +116,6 @@ namespace MarketplaceApi.Application.Services
         {
             try
             {
-                // Implementar lógica de logout (revocar token, etc.)
                 _logger.LogInformation("Usuario {UsuarioId} cerró sesión", usuarioId);
                 return await Task.FromResult(true);
             }
@@ -147,12 +137,13 @@ namespace MarketplaceApi.Application.Services
                 return new UsuarioPerfilDto
                 {
                     Id = usuario.Id,
-                    Nombre = $"{usuario.Nombre} {usuario.Apellido}".Trim(),
+                    Nombre = usuario.Nombre,
                     Apellido = usuario.Apellido,
                     Email = usuario.Email,
                     FotoUrl = usuario.FotoUrl,
                     Rol = usuario.Rol,
-                    FechaRegistro = usuario.FechaRegistro
+                    FechaRegistro = usuario.FechaRegistro,
+                    Estado = usuario.Estado
                 };
             }
             catch (Exception ex) when (ex is not NotFoundException)
@@ -170,7 +161,6 @@ namespace MarketplaceApi.Application.Services
                 if (usuario == null)
                     throw new NotFoundException("Usuario", usuarioId);
 
-                // Verificar email único (excluyendo el actual)
                 if (usuario.Email != dto.Email)
                 {
                     var emailExiste = await _usuarioRepo.AnyAsync(u => u.Email == dto.Email && u.Id != usuarioId);
@@ -190,11 +180,13 @@ namespace MarketplaceApi.Application.Services
                 return new UsuarioPerfilDto
                 {
                     Id = usuario.Id,
-                    Nombre = $"{usuario.Nombre} {usuario.Apellido}".Trim(),
+                    Nombre = usuario.Nombre,
+                    Apellido = usuario.Apellido,
                     Email = usuario.Email,
                     FotoUrl = usuario.FotoUrl,
                     Rol = usuario.Rol,
-                    FechaRegistro = usuario.FechaRegistro
+                    FechaRegistro = usuario.FechaRegistro,
+                    Estado = usuario.Estado
                 };
             }
             catch (Exception ex) when (ex is not BusinessException && ex is not NotFoundException)
@@ -212,11 +204,9 @@ namespace MarketplaceApi.Application.Services
                 if (usuario == null)
                     throw new NotFoundException("Usuario", usuarioId);
 
-                // Verificar contraseña actual
                 if (!BCrypt.Net.BCrypt.Verify(dto.CurrentPassword, usuario.PasswordHash))
                     throw new BusinessException("Contraseña actual incorrecta");
 
-                // Hashear nueva contraseña
                 usuario.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
 
                 _usuarioRepo.Update(usuario);
@@ -231,7 +221,7 @@ namespace MarketplaceApi.Application.Services
                 throw;
             }
         }
-        // Modificar SubirFotoPerfilAsync
+
         public async Task<string> SubirFotoPerfilAsync(int usuarioId, IFormFile archivo)
         {
             try
@@ -240,7 +230,6 @@ namespace MarketplaceApi.Application.Services
                 if (usuario == null)
                     throw new NotFoundException("Usuario", usuarioId);
 
-                // Validar archivo
                 if (archivo == null || archivo.Length == 0)
                     throw new BusinessException("No se ha seleccionado ningún archivo");
 
@@ -253,14 +242,13 @@ namespace MarketplaceApi.Application.Services
                 if (archivo.Length > 5 * 1024 * 1024) // 5MB
                     throw new BusinessException("El archivo no puede superar los 5MB");
 
-                // Eliminar foto anterior si existe en Cloudinary
+                // Eliminar foto anterior si existe
                 if (!string.IsNullOrEmpty(usuario.FotoUrl))
                 {
-                    var publicId = _cloudinaryService.GetPublicIdFromUrl(usuario.FotoUrl);
-                    await _cloudinaryService.DeleteImageAsync(publicId);
+                    await _cloudinaryService.DeleteImageAsync(usuario.FotoUrl);
                 }
 
-                // Subir nueva foto a Cloudinary
+                // Subir nueva foto a Cloudinary (solo 2 argumentos)
                 var imageUrl = await _cloudinaryService.UploadImageAsync(archivo, "perfiles");
 
                 // Actualizar URL en BD
@@ -279,7 +267,6 @@ namespace MarketplaceApi.Application.Services
             }
         }
 
-        // Modificar EliminarFotoPerfilAsync
         public async Task<bool> EliminarFotoPerfilAsync(int usuarioId)
         {
             try
@@ -290,9 +277,7 @@ namespace MarketplaceApi.Application.Services
 
                 if (!string.IsNullOrEmpty(usuario.FotoUrl))
                 {
-                    // Eliminar de Cloudinary
-                    var publicId = _cloudinaryService.GetPublicIdFromUrl(usuario.FotoUrl);
-                    await _cloudinaryService.DeleteImageAsync(publicId);
+                    await _cloudinaryService.DeleteImageAsync(usuario.FotoUrl);
                 }
 
                 usuario.FotoUrl = null;
@@ -308,6 +293,7 @@ namespace MarketplaceApi.Application.Services
                 throw;
             }
         }
+
         public async Task<bool> ExistsByEmailAsync(string email)
         {
             return await _usuarioRepo.AnyAsync(u => u.Email == email);
@@ -406,12 +392,9 @@ namespace MarketplaceApi.Application.Services
                 if (usuario == null)
                     throw new NotFoundException("Usuario", usuarioId);
 
-                // Eliminar foto si existe
                 if (!string.IsNullOrEmpty(usuario.FotoUrl))
                 {
-                    var filePath = Path.Combine(_fotosPath, Path.GetFileName(usuario.FotoUrl));
-                    if (File.Exists(filePath))
-                        File.Delete(filePath);
+                    await _cloudinaryService.DeleteImageAsync(usuario.FotoUrl);
                 }
 
                 _usuarioRepo.Delete(usuario);
@@ -433,12 +416,9 @@ namespace MarketplaceApi.Application.Services
             {
                 var usuario = await _usuarioRepo.FirstOrDefaultAsync(u => u.Email == email);
                 if (usuario == null)
-                    return false; // No revelamos si el email existe o no por seguridad
+                    return false;
 
-                // Generar token de recuperación
                 var token = Guid.NewGuid().ToString();
-                // Aquí implementar envío de email con el token
-
                 _logger.LogInformation("Solicitud de recuperación de contraseña para {Email}", email);
                 return true;
             }
@@ -456,9 +436,6 @@ namespace MarketplaceApi.Application.Services
                 var usuario = await _usuarioRepo.FirstOrDefaultAsync(u => u.Email == dto.Email);
                 if (usuario == null)
                     throw new NotFoundException("Usuario", dto.Email);
-
-                // Validar token (implementar lógica de validación de token)
-                // if (!ValidateToken(dto.Token, usuario.Id)) throw new BusinessException("Token inválido");
 
                 usuario.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
                 _usuarioRepo.Update(usuario);
@@ -478,7 +455,6 @@ namespace MarketplaceApi.Application.Services
         {
             try
             {
-                // Implementar verificación de email
                 _logger.LogInformation("Email verificado para {Email}", email);
                 return await Task.FromResult(true);
             }
@@ -493,7 +469,6 @@ namespace MarketplaceApi.Application.Services
         {
             try
             {
-                // Implementar lógica de refresh token
                 _logger.LogInformation("Refresh token solicitado");
                 return await Task.FromResult<LoginResponseDto?>(null);
             }
@@ -508,7 +483,6 @@ namespace MarketplaceApi.Application.Services
         {
             try
             {
-                // Implementar lógica para revocar token
                 _logger.LogInformation("Token revocado para usuario {UsuarioId}", usuarioId);
                 return await Task.FromResult(true);
             }
@@ -527,13 +501,9 @@ namespace MarketplaceApi.Application.Services
         public async Task<Dictionary<string, int>> GetUsuariosPorRolAsync()
         {
             var usuarios = await _usuarioRepo.GetAllAsync();
-
             return usuarios
                 .GroupBy(u => u.Rol)
-                .ToDictionary(
-                    g => g.Key,
-                    g => g.Count()
-                );
+                .ToDictionary(g => g.Key, g => g.Count());
         }
 
         public async Task<int> GetUsuariosActivosAsync()
@@ -542,18 +512,6 @@ namespace MarketplaceApi.Application.Services
         }
 
         #region Métodos Privados
-
-        private string GenerateJwtToken(Usuario usuario)
-        {
-            // Implementar generación de JWT token
-            // Requiere: Microsoft.AspNetCore.Authentication.JwtBearer
-            return "token_generado_aqui";
-        }
-
-        private string GenerateRefreshToken()
-        {
-            return Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-        }
 
         private static UsuarioDto MapToDto(Usuario u)
         {

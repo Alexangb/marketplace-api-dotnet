@@ -7,7 +7,8 @@ namespace MarketplaceApi.Shared.Services
 {
     public class CloudinaryService
     {
-        private readonly Cloudinary _cloudinary;
+        private readonly Cloudinary? _cloudinary;
+        private readonly bool _isConfigured;
 
         public CloudinaryService(IConfiguration configuration)
         {
@@ -15,12 +16,24 @@ namespace MarketplaceApi.Shared.Services
             var apiKey = configuration["Cloudinary:ApiKey"];
             var apiSecret = configuration["Cloudinary:ApiSecret"];
 
-            var account = new Account(cloudName, apiKey, apiSecret);
-            _cloudinary = new Cloudinary(account);
+            if (!string.IsNullOrEmpty(cloudName) && !string.IsNullOrEmpty(apiKey) && !string.IsNullOrEmpty(apiSecret))
+            {
+                var account = new Account(cloudName, apiKey, apiSecret);
+                _cloudinary = new Cloudinary(account);
+                _isConfigured = true;
+            }
+            else
+            {
+                _isConfigured = false;
+                Console.WriteLine("⚠️ Cloudinary no configurado.");
+            }
         }
 
         public async Task<string> UploadImageAsync(IFormFile file, string folder = "perfiles")
         {
+            if (!_isConfigured || _cloudinary == null)
+                throw new Exception("Cloudinary no está configurado. Agrega las credenciales.");
+
             using var stream = file.OpenReadStream();
             var uploadParams = new ImageUploadParams
             {
@@ -33,22 +46,40 @@ namespace MarketplaceApi.Shared.Services
             return uploadResult.SecureUrl.ToString();
         }
 
-        public async Task<bool> DeleteImageAsync(string publicId)
+        public async Task<bool> DeleteImageAsync(string imageUrl)
         {
-            var deletionParams = new DeletionParams(publicId);
-            var result = await _cloudinary.DestroyAsync(deletionParams);
-            return result.Result == "ok";
+            if (!_isConfigured || _cloudinary == null) return true;
+            if (string.IsNullOrEmpty(imageUrl)) return true;
+
+            try
+            {
+                var publicId = ExtractPublicIdFromUrl(imageUrl);
+                if (string.IsNullOrEmpty(publicId)) return true;
+
+                var deletionParams = new DeletionParams(publicId);
+                var result = await _cloudinary.DestroyAsync(deletionParams);
+                return result.Result == "ok";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al eliminar imagen: {ex.Message}");
+                return false;
+            }
         }
 
-        public string GetPublicIdFromUrl(string url)
+        private string? ExtractPublicIdFromUrl(string url)
         {
-            if (string.IsNullOrEmpty(url)) return Guid.NewGuid().ToString();
-            
-            // Extraer el public_id de la URL de Cloudinary
-            var uri = new Uri(url);
-            var segments = uri.AbsolutePath.Split('/');
-            var fileName = segments.Last();
-            return Path.GetFileNameWithoutExtension(fileName);
+            try
+            {
+                var uri = new Uri(url);
+                var segments = uri.AbsolutePath.Split('/');
+                var fileName = segments.Last();
+                return Path.GetFileNameWithoutExtension(fileName);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
